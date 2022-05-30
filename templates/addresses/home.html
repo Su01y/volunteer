@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.css' rel='stylesheet' />
+
+    <title>Document</title>
+</head>
+<body>
+    <h1>Django Home</h1>
+
+    <div id='map' style='width: 40%; height: 500px;'></div>
+    <p class="map-info"></p>
+    <a href="/addtask">Добавить событие</a>
+    <script>
+ 
+    mapboxgl.accessToken = 'pk.eyJ1IjoiZXJtYWsyMjgiLCJhIjoiY2wzbGt4aDk3MDIzcDNqcGhiNzM1Z212OSJ9.GhHG9-_9zTge3GnRuEitCA';
+    const map = new mapboxgl.Map({
+        container: 'map', // container ID
+        style: 'mapbox://styles/mapbox/streets-v11', // style URL
+        center: [37.61778, 55.75583], // starting position [lng, lat]
+        zoom: 8 // starting zoom
+    });
+    {% for address in addresses %}
+    var marker = new mapboxgl.Marker()
+        .setLngLat([{{ address.long }}, {{ address.lat }}])
+        .setPopup(new mapboxgl.Popup().setHTML("<a href='/tasks/{{ address.id }}'>{{ address.description }}</a>"))
+        .addTo(map);
+    {% endfor %}
+
+    // alert({{ addresses }});
+</script>
+</body>
+</html>
+<!-- <a href="/tasks/{{ address.id }}"></a> -->

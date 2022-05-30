@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.css' rel='stylesheet' />
+
+    <title>task</title>
+</head>
+<body>
+    <h1>{{ object.taskname }}</h1>
+    <p>{{ object.organization }}</p>
+    <p>{{ object.description }}</p>
+    <div id='map' style='width: 40%; height: 500px;'></div>
+    <p class="map-info"></p>
+
+    <script>
+ 
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZXJtYWsyMjgiLCJhIjoiY2wzbGt4aDk3MDIzcDNqcGhiNzM1Z212OSJ9.GhHG9-_9zTge3GnRuEitCA';
+        const map = new mapboxgl.Map({
+            container: 'map', // container ID
+            style: 'mapbox://styles/mapbox/streets-v11', // style URL
+            center: [{{ object.long }}, {{ object.lat }}], // starting position [lng, lat]
+            zoom: 12 // starting zoom
+        });
+        var marker = new mapboxgl.Marker()
+            .setLngLat([{{ object.long }}, {{ object.lat }}])
+            .setPopup(new mapboxgl.Popup().setHTML(""))
+            .addTo(map);        
+</script>       
+</body>
+</html>

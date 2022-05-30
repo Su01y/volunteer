@@ -1,0 +1,20 @@
+<html>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+
+    <h1>Волонтеры</h1>
+
+    {% if volunteer_list %}
+    <ul>
+
+        {% for volunteer in volunteer_list %}
+        <li>
+            <a href="/volunteers/{{ volunteer.id }}">{{ volunteer.username }}</a>
+        </li>
+        {% endfor %}
+
+    </ul>
+    {% else %}
+        <p>Волонтеров нет.</p>
+    {% endif %}
+</html>
